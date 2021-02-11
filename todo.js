@@ -7,7 +7,7 @@ const toDoForm = document.querySelector(".js-toDoForm"),
     const toDos = [];
 
     function saveToDos(){
-        localStorage.setItem(TODOS_LS,toDos);
+        localStorage.setItem(TODOS_LS,JSON.stringify(toDos));
     }
 
     function paintToDo(text){
@@ -37,10 +37,14 @@ const toDoForm = document.querySelector(".js-toDoForm"),
         toDoInput.value = " ";
     }
 
+
     function loadToDos(){
         const loadedToDos = localStorage.getItem(TODOS_LS);
         if(loadedToDos !== null){
-
+          const parsedToDos= JSON.parse(loadedToDos);
+          parsedToDos.forEach(function(toDo){
+            paintToDo(toDo.text); 
+        });
         }
     }
 
@@ -49,4 +53,4 @@ const toDoForm = document.querySelector(".js-toDoForm"),
         toDoForm.addEventListener("submit", handleSubmit);
     }
 
-    init()
+    init();
